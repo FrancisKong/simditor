@@ -244,6 +244,16 @@ module.exports = (grunt) ->
         src: "http://use.fonticons.com/kits/d7611efe/d7611efe.css"
         dest: "styles/fonticon.scss"
 
+    concat:
+      dist:
+        src: [
+          'node_modules/simple-module/lib/module.js'
+          'node_modules/simple-hotkeys/lib/hotkeys.js'
+          'node_modules/simple-uploader/lib/uploader.js'
+          'lib/simditor.js'
+        ]
+        dest: 'lib/simditor.js'
+
 
   grunt.loadNpmTasks 'grunt-contrib-sass'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
@@ -258,10 +268,11 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-jasmine'
   grunt.loadNpmTasks 'grunt-banner'
   grunt.loadNpmTasks 'grunt-curl'
+  grunt.loadNpmTasks 'grunt-contrib-concat'
 
   grunt.registerTask 'default', ['site', 'express', 'watch']
   grunt.registerTask 'site', ['sass', 'coffee', 'umd', 'copy:vendor', 'copy:scripts', 'copy:styles', 'usebanner', 'jekyll']
   grunt.registerTask 'test', ['coffee:moduleSpec', 'coffee:buttonSpec', 'jasmine']
   grunt.registerTask 'package', ['clean:package', 'copy:package', 'uglify:simditor', 'compress']
-
+  grunt.registerTask 'lib', ['coffee:simditor', 'umd', 'concat']
   grunt.registerTask 'fonticons', ['curl']
